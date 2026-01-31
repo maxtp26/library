@@ -1,0 +1,60 @@
+1. What classes do we need and what do they do?
+
+	-Book class
+		-title
+		-author
+		-ISBN? #not on openlibrary API, i can't find a free ISBN API so we'll hold off on that for now
+		-some unique identifier for a. book and b. edition #OpenLibrary has both of these--ah but it also has ISBN13 so we can use that!
+		-read/reading/finished ID
+		-date started/finished
+		-notes
+			-tagged by page #we can use an array or list of lists here most likely--dictionary doesn't seem right
+		-pub. year
+		-publisher
+	**methods:
+		-get_title() #loads all data from a given title
+		-get_isbn() #same from ISBN
+		-mark_to_read()
+		-mark_reading()
+		-mark_read() #or one single method mark_read_status() or smt like that
+		-add_book() #this is the method where we can make our api calls on openlibrary
+		-remove_book()
+		-add notes(page, string)
+		-change notes(page)
+	-Library class
+		-dictionary of books with the key being unique identifier (I prefer ISBN for cleanliness' sake)
+	**methods:
+		-list_books() #if no parameter it can list all books but it could also support parameters of read/unread/reading
+		-sort_books() #backend, for later display with list_books()
+		-ahhhh get_title() and get_isbn() would likely be methods of the library class?
+
+	CLI stuff:
+		with books should be able to
+			a. add
+			b. remove
+			c. mark read/unread/reading
+			d. add/modify notes
+		with library should be able to
+			a. list books
+			b. list all books that are read/unread/reading
+			c. pull up book by either title or isbn
+
+	JSON data:
+		1. 'dictionary' of ISBN+title for the library class
+		2. individual JSON files in their own folder containing all the data for each part of Book class
+	
+	files:
+	folder
+	----main.py
+	----books.py
+	----library.py
+	----api_header.py #so i don't get blocked! (https://gist.github.com/mekarpeles/a4f1b2b0414325b9958fdc8376f14d16)
+	----library.json
+	----books folder
+	--------individual books.json
+	--------"                   "
+	what to import:
+		-only need JSON and requests so far, don't think there's anything else we need
+	Bugs to watch out for:
+		-API issues #manual entry mode activate if can't call API?)
+		-non-unique identifiers #this is why we're using ISBN but if two books have the same name could cause issues for get_title()--should return a list of possible options (with author and publishing year) and ask user to choose
