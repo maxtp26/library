@@ -1,10 +1,5 @@
 from datetime import datetime
-
-def safe_int(page):
-    try:
-        return int(page)
-    except ValueError:
-        return None
+from utils import safe_int
     
 class Book:
     def __init__(self, isbn, title, author, publisher, year):

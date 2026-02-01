@@ -22,7 +22,6 @@ def search_book(query):
         year = None
     try:
         edition_key = request_dict["docs"][0]["editions"]["docs"][0]["key"]
-        print(edition_key)
         try:
             edition_request = requests.get(f"https://openlibrary.org{edition_key}.json", headers=API_HEADERS)
         except requests.exceptions.RequestException:

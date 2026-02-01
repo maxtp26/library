@@ -71,20 +71,20 @@ def book_menu(book):
         elif command == "4":
             status = input("What should we change the status to? ")
             if status == "read":
-                yn_boolean = input("Did you finish it today? Input Y/N ").lower
+                yn_boolean = input("Did you finish it today? Input Y/N ").lower()
                 if yn_boolean == "y":
                     date_finished = None
-                if yn_boolean == "n":
+                elif yn_boolean == "n":
                     date_finished = input("When did you finish it? ")
                 else: 
                     print("Invalid input! Defaulted to finished today.")
                     date_finished = None
                 book.mark_finished(date_finished)
             elif status == "reading":
-                yn_boolean = input("Did you start it today? Input Y/N ").lower
+                yn_boolean = input("Did you start it today? Input Y/N ").lower()
                 if yn_boolean == "y":
                     date_started = None
-                if yn_boolean == "n":
+                elif yn_boolean == "n":
                     date_started = input("When did you finish it? ")
                 else:
                     print("Invalid input! Defaulted to started today. ")
@@ -101,7 +101,7 @@ def book_menu(book):
 def book_selector(book_list, library):
     book_selection = book_load(book_list)
     if book_selection is not None:
-        remove_isbn = safe_int(book_menu(book_selection)) #loads book into book menu which returns a number if book is to be removed
+        remove_isbn = book_menu(book_selection) #loads book into book menu which returns a number if book is to be removed
         if remove_isbn is not None:
             if library.remove_book(f"{remove_isbn}"):
                 print("Book removed.")
@@ -112,24 +112,24 @@ def display_notes(notes, book):
         while notes_open:
             for index, dictionary in enumerate(notes):
                 print(f"{index + 1}. {dictionary["page"]}: {dictionary["content"]} (category: {dictionary["category"]})")
-                command = input("Would you like to change or remove anything? Input change, remove, or exit. ").lower()
-                if command == "change":
-                    line = safe_int(input("Which note would you like to change? Input the number. "))
-                    content = input("What would you like to change it to? Enter note. " )
-                    category = input("What is the new category? ")
-                    if book.change_note(line - 1, content, category):
-                        print("Note changed!")
-                    else:
-                        print("Invalid input")
-                elif command == "remove":
-                    line = safe_int(input("Which note would you like to remove? Input the number. "))
-                    if book.remove_note(line - 1):
-                        print("Note removed!")
-                    else:
-                        print("Invalid input!")
-                elif command == "exit":
-                    notes_open = False
+            command = input("Would you like to change or remove anything? Input change, remove, or exit. ").lower()
+            if command == "change":
+                line = safe_int(input("Which note would you like to change? Input the number. "))
+                content = input("What would you like to change it to? Enter note. " )
+                category = input("What is the new category? ")
+                if book.change_note(line - 1, content, category):
+                    print("Note changed!")
                 else:
+                    print("Invalid input")
+            elif command == "remove":
+                line = safe_int(input("Which note would you like to remove? Input the number. "))
+                if book.remove_note(line - 1):
+                        print("Note removed!")
+                else:
+                        print("Invalid input!")
+            elif command == "exit":
+                    notes_open = False
+            else:
                     print("Invalid command! Check spelling.")
     else:
         print("No notes found.")
@@ -159,4 +159,5 @@ def main():
             break
         else:
             print("Invalid command! Input a digit only.")
-main()
+if __name__ == "__main__":
+    main()
