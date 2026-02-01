@@ -19,6 +19,7 @@ class Book:
         self.notes = []
     def mark_unread(self):
         self.date_started = None
+        self.date_finished = None
         self.status = "unread"
     def mark_reading(self, date_started=None):
         if date_started is None:
@@ -31,7 +32,7 @@ class Book:
             self.date_finished = datetime.now().strftime("%Y-%m-%d")
         else:
             self.date_finished = date_finished
-        self.status = "finished"
+        self.status = "read"
     def add_note(self, page, content, category):
         page_num = safe_int(page)
         if page_num is not None:
@@ -75,7 +76,7 @@ class Book:
         book.notes = dict["notes"]
         return book
     def get_notes_by_category(self, category):
-        return [{"page": note["page"], "content": note["content"]} for note in self.notes if note["category"] == category]
+        return [note for note in self.notes if note["category"] == category]
     def get_notes_by_page_range(self, start, end):
         page_start = safe_int(start)
         page_end = safe_int(end)

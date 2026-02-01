@@ -13,7 +13,7 @@ class Library:
         return False
     def find_by_title(self, title):
         return [self.books[isbn] for isbn in self.books if title.lower() in self.books[isbn].title.lower()]
-    def filter_by_status(self, status):
+    def find_by_status(self, status):
         return [self.books[isbn] for isbn in self.books if self.books[isbn].status == status]
     def save(self, filename):
         library_list = []
